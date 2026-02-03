@@ -1,17 +1,17 @@
 # DevTo Copilot CLI Contest
 
-This monorepo contains three distinct projects developed for the DevTo Copilot CLI Contest, all focused on improving developer experience and productivity.
+This monorepo contains four distinct projects developed for the DevTo Copilot CLI Contest, all focused on improving developer experience and productivity.
 
 ## Projects
 
-### 1. Dashboard Application
+### 1. Dashboard UI
 A comprehensive monitoring and analytics dashboard application.
 
-**Location:** [`dashboard/`](dashboard/)
+**Location:** [`dashboard-ui/`](dashboard-ui/)
 
 **Description:** Interactive dashboard for visualizing metrics, monitoring systems, and analyzing data in real-time.
 
-[View Dashboard README](dashboard/README.md)
+[View Dashboard README](dashboard-ui/README.md)
 
 ### 2. Logs Aggregator
 A centralized log aggregation and analysis system.
@@ -31,16 +31,27 @@ A creative digital postcard generation and sharing platform.
 
 [View Postcards README](postcards/README.md)
 
+### 4. Documentation Builder App
+An automated documentation generation and building system.
+
+**Location:** [`documentation-builder-app/`](documentation-builder-app/)
+
+**Description:** Automatically generates, builds, and publishes technical documentation from code, markdown, and API specifications.
+
+[View Documentation Builder README](documentation-builder-app/README.md)
+
 ## Repository Structure
 
 ```
 .
-├── dashboard/           # Dashboard application
-├── logs-aggregator/     # Log aggregation system
-├── postcards/           # Postcard generation platform
-├── temp-workspace/      # Temporary workspace (gitignored)
-├── .gitignore          # Git ignore rules
-└── README.md           # This file
+├── dashboard-ui/               # Dashboard application
+├── logs-aggregator/            # Log aggregation system
+├── postcards/                  # Postcard generation platform
+├── documentation-builder-app/  # Documentation automation tool
+├── temp-workspace/             # Temporary workspace (gitignored)
+├── COPILOT_HISTORY            # AI collaboration history log
+├── .gitignore                 # Git ignore rules
+└── README.md                  # This file
 ```
 
 ## Getting Started
