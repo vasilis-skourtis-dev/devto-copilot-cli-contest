@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.18</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>org.common.services</groupId>
+    <artifactId>postcards</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>postcards</name>
+    <description>Digital postcard generation and sharing platform</description>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>postcards-model-universal</module>
+        <module>postcards-model-domain-objects</module>
+        <module>postcards-model-business-rules</module>
+        <module>postcards-model-persistence-records</module>
+        <module>postcards-model-application-interface-dtos</module>
+        <module>postcards-model-converters</module>
+
+        <module>postcards-domain-repositories</module>
+        <module>postcards-domain-services</module>
+
+        <module>postcards-application-services-apis</module>
+        <module>postcards-services-producer</module>
+        <module>postcards-services-consumer</module>
+
+        <module>postcards-application-ui</module>
+        <module>postcards-application-web</module>
+
+        <module>postcards-qa-unit-tests</module>
+        <module>postcards-qa-integration-tests</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <apache.poi.version>5.2.0</apache.poi.version>
+        <lombok.version>1.18.30</lombok.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Internal Module Dependencies -->
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-model-universal</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-model-domain-objects</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-model-business-rules</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-model-persistence-records</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-model-application-interface-dtos</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-model-converters</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-domain-repositories</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-domain-services</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-application-services-apis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-services-producer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-services-consumer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-application-ui</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-application-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Common Dependencies -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${apache.poi.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
