@@ -13,33 +13,33 @@
     </parent>
 
     <groupId>org.common.services</groupId>
-    <artifactId>dashboard-ui</artifactId>
+    <artifactId>postcards</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>dashboard-ui</name>
-    <description>Comprehensive monitoring and analytics dashboard application</description>
+    <name>postcards</name>
+    <description>Digital postcard generation and sharing platform</description>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>dashboard-ui-model-universal</module>
-        <module>dashboard-ui-model-domain-objects</module>
-        <module>dashboard-ui-model-business-rules</module>
-        <module>dashboard-ui-model-persistence-records</module>
-        <module>dashboard-ui-model-application-interface-dtos</module>
-        <module>dashboard-ui-model-converters</module>
+        <module>postcards-model-universal</module>
+        <module>postcards-model-domain-objects</module>
+        <module>postcards-model-business-rules</module>
+        <module>postcards-model-persistence-records</module>
+        <module>postcards-model-application-interface-dtos</module>
+        <module>postcards-model-converters</module>
 
-        <module>dashboard-ui-domain-repositories</module>
-        <module>dashboard-ui-domain-services</module>
+        <module>postcards-domain-repositories</module>
+        <module>postcards-domain-services</module>
 
-        <module>dashboard-ui-application-services-apis</module>
-        <module>dashboard-ui-services-producer</module>
-        <module>dashboard-ui-services-consumer</module>
+        <module>postcards-application-services-apis</module>
+        <module>postcards-services-producer</module>
+        <module>postcards-services-consumer</module>
 
-        <module>dashboard-ui-application-ui</module>
-        <module>dashboard-ui-application-web</module>
+        <module>postcards-application-ui</module>
+        <module>postcards-application-web</module>
 
-        <module>dashboard-ui-qa-unit-tests</module>
-        <module>dashboard-ui-qa-integration-tests</module>
+        <module>postcards-qa-unit-tests</module>
+        <module>postcards-qa-integration-tests</module>
     </modules>
 
     <properties>
@@ -47,6 +47,7 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <apache.poi.version>5.2.0</apache.poi.version>
         <lombok.version>1.18.30</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
@@ -56,32 +57,67 @@
             <!-- Internal Module Dependencies -->
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-universal</artifactId>
+                <artifactId>postcards-model-universal</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-domain-objects</artifactId>
+                <artifactId>postcards-model-domain-objects</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-business-rules</artifactId>
+                <artifactId>postcards-model-business-rules</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-persistence-records</artifactId>
+                <artifactId>postcards-model-persistence-records</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-application-interface-dtos</artifactId>
+                <artifactId>postcards-model-application-interface-dtos</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-converters</artifactId>
+                <artifactId>postcards-model-converters</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-domain-repositories</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-domain-services</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-application-services-apis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-services-producer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-services-consumer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-application-ui</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.common.services</groupId>
+                <artifactId>postcards-application-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -95,6 +131,11 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${apache.poi.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

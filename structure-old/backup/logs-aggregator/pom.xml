@@ -13,33 +13,33 @@
     </parent>
 
     <groupId>org.common.services</groupId>
-    <artifactId>dashboard-ui</artifactId>
+    <artifactId>logs-aggregator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>dashboard-ui</name>
-    <description>Comprehensive monitoring and analytics dashboard application</description>
+    <name>logs-aggregator</name>
+    <description>Centralized log collection, processing, and analysis system</description>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>dashboard-ui-model-universal</module>
-        <module>dashboard-ui-model-domain-objects</module>
-        <module>dashboard-ui-model-business-rules</module>
-        <module>dashboard-ui-model-persistence-records</module>
-        <module>dashboard-ui-model-application-interface-dtos</module>
-        <module>dashboard-ui-model-converters</module>
+        <module>logs-aggregator-model-universal</module>
+        <module>logs-aggregator-model-domain-objects</module>
+        <module>logs-aggregator-model-business-rules</module>
+        <module>logs-aggregator-model-persistence-records</module>
+        <module>logs-aggregator-model-application-interface-dtos</module>
+        <module>logs-aggregator-model-converters</module>
 
-        <module>dashboard-ui-domain-repositories</module>
-        <module>dashboard-ui-domain-services</module>
+        <module>logs-aggregator-domain-repositories</module>
+        <module>logs-aggregator-domain-services</module>
 
-        <module>dashboard-ui-application-services-apis</module>
-        <module>dashboard-ui-services-producer</module>
-        <module>dashboard-ui-services-consumer</module>
+        <module>logs-aggregator-application-services-apis</module>
+        <module>logs-aggregator-services-producer</module>
+        <module>logs-aggregator-services-consumer</module>
 
-        <module>dashboard-ui-application-ui</module>
-        <module>dashboard-ui-application-web</module>
+        <module>logs-aggregator-application-ui</module>
+        <module>logs-aggregator-application-web</module>
 
-        <module>dashboard-ui-qa-unit-tests</module>
-        <module>dashboard-ui-qa-integration-tests</module>
+        <module>logs-aggregator-qa-unit-tests</module>
+        <module>logs-aggregator-qa-integration-tests</module>
     </modules>
 
     <properties>
@@ -49,6 +49,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <lombok.version>1.18.30</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <elasticsearch.version>7.17.15</elasticsearch.version>
     </properties>
 
     <dependencyManagement>
@@ -56,32 +57,32 @@
             <!-- Internal Module Dependencies -->
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-universal</artifactId>
+                <artifactId>logs-aggregator-model-universal</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-domain-objects</artifactId>
+                <artifactId>logs-aggregator-model-domain-objects</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-business-rules</artifactId>
+                <artifactId>logs-aggregator-model-business-rules</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-persistence-records</artifactId>
+                <artifactId>logs-aggregator-model-persistence-records</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-application-interface-dtos</artifactId>
+                <artifactId>logs-aggregator-model-application-interface-dtos</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.common.services</groupId>
-                <artifactId>dashboard-ui-model-converters</artifactId>
+                <artifactId>logs-aggregator-model-converters</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
