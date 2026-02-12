@@ -5,13 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.vs.common.services</groupId>
-        <artifactId>group-build-aggregator</artifactId>
+        <groupId>org.vs.common.services.basic.elements</groupId>
+        <artifactId>common-basic-elements</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.vs.common.services.documents</groupId>
-    <artifactId>document-composition-elements</artifactId>
-    <packaging>pom</packaging>
+    <groupId>org.vs.common.services.basic.elements.model</groupId>
+    <artifactId>common-model-converters</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+    </properties>
 
 </project>

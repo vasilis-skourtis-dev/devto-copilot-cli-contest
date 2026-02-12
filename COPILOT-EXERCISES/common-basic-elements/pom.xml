@@ -10,33 +10,35 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.vs.common.services.logging.elements</groupId>
-    <artifactId>common-logging-elements</artifactId>
+    <groupId>org.vs.common.services.basic.elements</groupId>
+    <artifactId>common-basic-elements</artifactId>
     <packaging>pom</packaging>
 
     <modules>
         <!--   LEVEL01    -->
-        <module>common-logging-model-universal</module>
+        <module>common-model-universal</module>
 
         <!--  LEVEL02 -->
-        <module>common-logging-model-persistence-records</module>
-        <module>common-logging-model-application-dtos</module>
+        <module>common-model-persistence-records</module>
+        <module>common-model-application-dtos</module>
 
         <!--  LEVEL03 -->
-        <module>common-logging-model-converters</module>
+        <module>common-model-converters</module>
 
         <!--  LEVEL04 -->
-        <module>common-logging-persistence-accessors</module>
+        <module>common-persistence-accessors</module>
 
         <!--  LEVEL05 -->
-        <module>common-logging-domain-services</module>
+        <module>common-domain-services</module>
 
         <!--  LEVEL06 -->
-        <module>common-logging-application-services</module>
-        <module>common-logging-application-ui</module>
+        <module>common-application-services</module>
+        <module>common-application-ui</module>
 
         <!--  LEVEL07 -->
-        <module>common-logging-application-web</module>
+        <module>common-application-porter</module>
+        <module>common-application-web</module>
+
     </modules>
 
     <properties>

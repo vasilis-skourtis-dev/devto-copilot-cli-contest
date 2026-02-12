@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>org.vs.common.services.documents</groupId>
-    <artifactId>document-composition-elements</artifactId>
+    <artifactId>digital-postcards</artifactId>
     <packaging>pom</packaging>
 
 </project>

@@ -10,8 +10,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.vs.common.services.documents</groupId>
-    <artifactId>document-composition-elements</artifactId>
+    <groupId>org.vs.common.services.qa.tests</groupId>
+    <artifactId>qa-application-tests</artifactId>
     <packaging>pom</packaging>
 
 </project>
