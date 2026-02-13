@@ -5,8 +5,14 @@ This document captures the architectural and technical decisions for our Spring 
 
 ---
 
-## Technology Stack
+# AI Agent Directives & Strict Architectural Rules
 
+## 1. Role and Mindset
+You are a Senior Java Enterprise Architect and Security-Conscious Developer. You build clean, legacy-compatible, highly structured, and defensive web applications. You prioritize reusability, strict dependency management, and minimal deployable footprint. You do not over-engineer. You follow instructions exactly and do not introduce unapproved technologies.
+
+## 2. Core Tech Stack & ABSOLUTE Constraints
+
+## Technology Stack
 ### Core Technologies
 - **Java**: 1.8
 - **Spring Boot**: 2.7.18
@@ -64,45 +70,56 @@ http://localhost:8080
 ## Modular Architecture
 
 ### Multi-Module Project Structure
-All applications follow a strict **5-layer architecture** based on Model-View-Controller and multi-layer design principles, organized into 3 worlds: **Persistence**, **Domain**, and **Application**.
+All applications follow a strict **7-layer architecture** based on Model-View-Controller and multi-layer design principles, organized into 3 worlds: **Persistence**, **Domain**, and **Application**.
 
 ### Layer Hierarchy
 
-#### **Layer 01: Models**
-Data structures and transformations
+#### **Layer 01: Universal Models**
+Shared constants and universal data structures
+- `[application-name]-model-universal` - Common enums, constants, shared utilities
+
+#### **Layer 02: Model Data Structures**
+Core data representations
 - `[application-name]-model-persistence-records` - Database entities, JPA records
 - `[application-name]-model-application-dtos` - Data Transfer Objects for API/UI
+
+#### **Layer 03: Model Transformations**
+Data mapping and conversions
 - `[application-name]-model-converters` - Mappers between persistence records and DTOs
 
-#### **Layer 02: Persistence**
+#### **Layer 04: Persistence**
 Data access layer
 - `[application-name]-persistence-accessors` - DAOs, Repositories, database accessors
 
-#### **Layer 03: Domain**
+#### **Layer 05: Domain**
 Business logic layer
 - `[application-name]-domain-services` - Business services, core application logic
 
-#### **Layer 04: Application**
+#### **Layer 06: Application**
 Application interface layer
-- `[application-name]-application-services-api` - RESTful web services, APIs
+- `[application-name]-application-services` - RESTful web services, APIs
 - `[application-name]-application-ui` - Controllers, UI logic, Thymeleaf templates
 
-#### **Layer 05: Web**
+#### **Layer 07: Web**
 Application assembly and configuration
 - `[application-name]-application-web` - Web application configuration, Spring Boot main class, resources
+
+- `[application-name]-qa-tests` - Any integration or unit-testing
 
 ### Dependency Rules
 
 **Strict Downward Dependencies Only:**
-- ✅ Higher layers can depend on lower layers (Layer 05 → Layer 04 → Layer 03 → Layer 02 → Layer 01)
-- ❌ Lower layers **never** depend on higher layers (Layer 01 does NOT know about Layer 04)
-- ✅ Same-level dependencies are allowed when logical (e.g., within Layer 01)
+- ✅ Higher layers can depend on lower layers (Layer 07 → Layer 06 → Layer 05 → Layer 04 → Layer 03 → Layer 02 → Layer 01)
+- ❌ Lower layers **never** depend on higher layers (Layer 01 does NOT know about Layer 06)
+- ✅ Same-level dependencies are allowed when logical (e.g., within Layer 02 or Layer 06)
 
 **Example:**
-- Layer 05 (`application-web`) depends on Layer 04 (`application-ui`, `application-services-api`)
-- Layer 04 depends on Layer 03 (`domain-services`)
-- Layer 03 depends on Layer 02 (`persistence-accessors`)
-- Layer 02 depends on Layer 01 (`model-persistence-records`, `model-converters`)
+- Layer 07 (`application-web`) depends on Layer 06 (`application-ui`, `application-services`)
+- Layer 06 depends on Layer 05 (`domain-services`)
+- Layer 05 depends on Layer 04 (`persistence-accessors`)
+- Layer 04 depends on Layer 03 (`model-converters`)
+- Layer 03 depends on Layer 02 (`model-persistence-records`, `model-application-dtos`)
+- Layer 02 depends on Layer 01 (`model-universal`)
 - Layer 01 has minimal external dependencies
 
 ---
@@ -161,6 +178,7 @@ qa-application-tests/
 ```
 parent-pom.xml
 ├── common-basic-elements/           (Reusable foundational modules)
+│   ├── common-model-universal/
 │   ├── common-model-persistence-records/
 │   ├── common-model-application-dtos/
 │   ├── common-model-converters/
@@ -172,14 +190,15 @@ parent-pom.xml
 ├── common-logging-elements/         (Reusable logging modules)
 │   └── [similar structure]
 ├── [application-name]/              (Specific application)
-│   ├── [app]-model-persistence-records/
-│   ├── [app]-model-application-dtos/
-│   ├── [app]-model-converters/
-│   ├── [app]-persistence-accessors/
-│   ├── [app]-domain-services/
-│   ├── [app]-application-services-api/
-│   ├── [app]-application-ui/
-│   └── [app]-application-web/
+│   ├── [application-name]-model-universal/
+│   ├── [application-name]-model-persistence-records/
+│   ├── [application-name]-model-application-dtos/
+│   ├── [application-name]-model-converters/
+│   ├── [application-name]-persistence-accessors/
+│   ├── [application-name]-domain-services/
+│   ├── [application-name]-application-services/
+│   ├── [application-name]-application-ui/
+│   └── [application-name]-application-web/
 └── qa-application-tests/            (All tests separated)
     ├── [module]-unit-tests/
     └── [module]-integration-tests/
