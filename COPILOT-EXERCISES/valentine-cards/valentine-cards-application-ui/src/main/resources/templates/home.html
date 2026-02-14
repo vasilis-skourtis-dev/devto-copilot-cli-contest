@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Valentine Cards</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="home-page">
+    <div class="container">
+        <div class="home-content">
+            <h1 class="app-title">💌 Valentine Cards</h1>
+            <p class="app-subtitle">Send secret messages with love</p>
+            
+            <div class="card-container" onclick="openCard()">
+                <div class="heart closed" id="heart">
+                    <div class="heart-half left"></div>
+                    <div class="heart-half right"></div>
+                    <div class="heart-text">Click to Open ❤️</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Hide Messages</h3>
+                    <p>Encode secret love notes in beautiful images</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📧</span>
+                    <h3>Send via Email</h3>
+                    <p>Share your Valentine cards instantly</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🔓</span>
+                    <h3>Reveal Secrets</h3>
+                    <p>Upload cards to decode hidden messages</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCard() {
+            window.location.href = '/card';
+        }
+    </script>
+</body>
+</html>

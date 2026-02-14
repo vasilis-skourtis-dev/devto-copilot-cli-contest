@@ -25,6 +25,7 @@
         <module>common-logging-elements</module>
         <module>document-composition-elements</module>
         <module>digital-postcards</module>
+        <module>valentine-cards</module>
         <module>qa-application-tests</module>
 <!--        <module>documentation-builder</module>-->
 <!--        <module>dashboard-ui</module>-->

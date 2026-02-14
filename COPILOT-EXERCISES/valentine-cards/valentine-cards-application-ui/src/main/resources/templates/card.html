@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Valentine Cards - Create or Read</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="card-page">
+    <div class="container">
+        <header class="page-header">
+            <a href="/" class="back-home">
+                <span>← Back Home</span>
+            </a>
+            <h1>💌 Your Valentine Card</h1>
+        </header>
+
+        <div class="card-operations">
+            <!-- Mode Selection Tabs -->
+            <div class="mode-tabs">
+                <button class="tab-button active" onclick="switchMode('read')" id="readTab">
+                    🔓 Read a Card
+                </button>
+                <button class="tab-button" onclick="switchMode('create')" id="createTab">
+                    ✍️ Create a Card
+                </button>
+            </div>
+
+            <!-- Read Card Section -->
+            <div id="readSection" class="operation-section active">
+                <div class="section-header">
+                    <h2>Upload a Valentine Card to Reveal the Secret Message</h2>
+                    <p>Drag and drop an image or click to browse</p>
+                </div>
+
+                <div class="drop-area" id="dropAreaRead">
+                    <div class="drop-area-content">
+                        <span class="upload-icon">📤</span>
+                        <p class="drop-text">Drop your Valentine card image here</p>
+                        <p class="or-text">or</p>
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('readImageInput').click()">
+                            Browse Files
+                        </button>
+                        <input type="file" id="readImageInput" accept="image/png,image/jpeg" style="display: none;">
+                        <p class="file-hint">Supported formats: PNG, JPEG (max 5MB)</p>
+                    </div>
+                </div>
+
+                <div id="readResult" class="result-box" style="display: none;">
+                    <h3>💕 Secret Message Revealed:</h3>
+                    <div class="message-display" id="decodedMessage"></div>
+                </div>
+
+                <div id="readError" class="error-box" style="display: none;">
+                    <span class="error-icon">⚠️</span>
+                    <p id="readErrorMessage"></p>
+                </div>
+            </div>
+
+            <!-- Create Card Section -->
+            <div id="createSection" class="operation-section">
+                <div class="section-header">
+                    <h2>Create Your Secret Valentine Card</h2>
+                    <p>Write your message and choose a beautiful background</p>
+                </div>
+
+                <form id="createForm" class="create-form">
+                    <div class="form-group">
+                        <label for="secretMessage">Your Secret Message ❤️</label>
+                        <textarea 
+                            id="secretMessage" 
+                            name="message" 
+                            rows="6" 
+                            maxlength="10000"
+                            placeholder="To my dearest Valentine,&#10;&#10;You make every day brighter with your smile...&#10;&#10;With all my love ❤️"
+                            required></textarea>
+                        <div class="char-counter">
+                            <span id="charCount">0</span> / 10,000 characters
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recipientEmail">Recipient Email 📧</label>
+                            <input 
+                                type="email" 
+                                id="recipientEmail" 
+                                name="recipientEmail" 
+                                placeholder="their-email@example.com"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senderName">Your Name (Optional)</label>
+                            <input 
+                                type="text" 
+                                id="senderName" 
+                                name="senderName" 
+                                placeholder="Your Secret Admirer">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailSubject">Email Subject (Optional)</label>
+                        <input 
+                            type="text" 
+                            id="emailSubject" 
+                            name="emailSubject" 
+                            placeholder="💌 You've received a Valentine's Card!"
+                            maxlength="200">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Background Image</label>
+                        <div class="drop-area" id="dropAreaCreate">
+                            <div class="drop-area-content">
+                                <span class="upload-icon">🖼️</span>
+                                <p class="drop-text">Drop background image here</p>
+                                <p class="or-text">or</p>
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('backgroundImageInput').click()">
+                                    Browse Files
+                                </button>
+                                <input type="file" id="backgroundImageInput" name="backgroundImage" accept="image/png,image/jpeg" style="display: none;" required>
+                                <p class="file-hint">Tip: Use a romantic image like hearts, roses, or landscapes</p>
+                            </div>
+                            <div class="preview-container" id="imagePreview" style="display: none;">
+                                <img id="previewImg" alt="Preview">
+                                <button type="button" class="btn-remove" onclick="clearImage()">✕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="createBtn">
+                            💌 Create & Send Card
+                        </button>
+                    </div>
+                </form>
+
+                <div id="createResult" class="result-box success-box" style="display: none;">
+                    <h3>✅ Card Created Successfully!</h3>
+                    <p id="createSuccessMessage"></p>
+                    <div class="preview-result" id="createdImagePreview" style="display: none;">
+                        <h4>Preview of your card:</h4>
+                        <img id="createdImg" alt="Created card">
+                    </div>
+                </div>
+
+                <div id="createError" class="error-box" style="display: none;">
+                    <span class="error-icon">⚠️</span>
+                    <p id="createErrorMessage"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/card.js}"></script>
+</body>
+</html>
