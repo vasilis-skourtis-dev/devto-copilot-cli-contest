@@ -1,0 +1,415 @@
+/* ============================================
+   Valentine Love Heart Cards - Main Stylesheet
+   ============================================
+   Layout: Full viewport, no scroll, centered heart
+   Heart: 70% width x 70% height of the viewport
+   Responsive: works on desktop and mobile
+   ============================================ */
+
+/* Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffe0ec;
+    background: linear-gradient(135deg, #ffe0ec 0%, #ffc0d0 50%, #ffb0c8 100%);
+}
+
+/* ============================================
+   HEART CONTAINER
+   70% of viewport, centered
+   ============================================ */
+.heart-page {
+    position: relative;
+    width: 70vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Heart shape using CSS — the visual background */
+.heart-shape {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.heart-shape::before,
+.heart-shape::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 60%;
+    background: #e63946;
+    border-radius: 50% 50% 0 0;
+    top: 0;
+}
+
+.heart-shape::before {
+    left: 50%;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.heart-shape::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+/* Red fill for lower part of heart */
+.heart-fill {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 70.7%;
+    height: 70.7%;
+    background: #e63946;
+    z-index: 0;
+    border-radius: 0 0 10px 0;
+}
+
+/* Content layer on top of heart */
+.heart-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 5%;
+}
+
+/* ============================================
+   MAIN AREA — positioned at ~30% from top
+   35% width and height of heart container
+   ============================================ */
+.main-area {
+    position: absolute;
+    top: 30%;
+    width: 55%;
+    max-height: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================
+   BOW BUTTON (Home page upload trigger)
+   ============================================ */
+.bow-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff69b4 0%, #ff1493 60%, #c71585 100%);
+    border: 3px solid #fff;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+    color: white;
+    font-size: 40px;
+}
+
+.bow-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+}
+
+.bow-button-label {
+    display: block;
+    margin-top: 12px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+/* Hidden file input */
+.hidden-input {
+    display: none;
+}
+
+/* ============================================
+   MESSAGE DISPLAY (View page)
+   ============================================ */
+.message-display {
+    width: 100%;
+    max-height: 100%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    border: 2px dashed #e63946;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
+.message-empty {
+    color: #999;
+    font-style: italic;
+}
+
+.message-error {
+    color: #c1121f;
+    font-weight: 600;
+}
+
+/* ============================================
+   CREATE FORM (Create page)
+   ============================================ */
+.create-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    line-height: 1.4;
+    resize: none;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-textarea::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.form-textarea:focus {
+    border-color: #ff69b4;
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.form-file-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.file-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 2px solid #ff69b4;
+    border-radius: 20px;
+    color: #c71585;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-label:hover {
+    background-color: #ff69b4;
+    color: white;
+}
+
+.file-name {
+    font-size: 12px;
+    color: white;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn-create {
+    padding: 10px 30px;
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    color: white;
+    border: 2px solid white;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-create:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #ff1493, #c71585);
+}
+
+.btn-create:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   MODE SWITCH (Bottom of heart)
+   Toggle between Read and Create
+   ============================================ */
+.mode-switch {
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    padding: 4px;
+    gap: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mode-switch a {
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.mode-switch a.active {
+    background-color: white;
+    color: #e63946;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.mode-switch a:not(.active):hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   PAGE TITLE (top of heart)
+   ============================================ */
+.page-title {
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 8%;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* ============================================
+   RESPONSIVE — Mobile
+   ============================================ */
+@media (max-width: 768px) {
+    .heart-page {
+        width: 92vw;
+        height: 85vh;
+    }
+
+    .main-area {
+        width: 70%;
+        max-height: 30%;
+        top: 28%;
+    }
+
+    .bow-button {
+        width: 90px;
+        height: 90px;
+        font-size: 30px;
+    }
+
+    .page-title {
+        font-size: 17px;
+        margin-top: 6%;
+    }
+
+    .mode-switch a {
+        padding: 6px 16px;
+        font-size: 12px;
+    }
+
+    .form-textarea {
+        height: 80px;
+        font-size: 13px;
+    }
+
+    .message-display {
+        font-size: 14px;
+        padding: 14px;
+    }
+
+    .btn-create {
+        padding: 8px 22px;
+        font-size: 13px;
+    }
+
+    .file-label {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .heart-page {
+        width: 96vw;
+        height: 90vh;
+    }
+
+    .main-area {
+        width: 75%;
+        top: 26%;
+    }
+
+    .bow-button {
+        width: 70px;
+        height: 70px;
+        font-size: 24px;
+    }
+
+    .page-title {
+        font-size: 15px;
+    }
+
+    .mode-switch a {
+        padding: 5px 12px;
+        font-size: 11px;
+    }
+}

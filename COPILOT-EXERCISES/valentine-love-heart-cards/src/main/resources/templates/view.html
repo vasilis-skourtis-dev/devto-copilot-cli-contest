@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Valentine Love Heart Cards - Message</title>
+    <link rel="stylesheet" th:href="@{/styles/valentine.css}"/>
+</head>
+<body>
+
+<div class="heart-page">
+    <!-- Heart background shape -->
+    <div class="heart-shape">
+        <div class="heart-fill"></div>
+    </div>
+
+    <!-- Content layer -->
+    <div class="heart-content">
+
+        <div class="page-title">&#x1F48C; Your Message</div>
+
+        <!-- Main area at ~30% from top -->
+        <div class="main-area">
+            <!-- Message found -->
+            <div th:if="${response != null and response.messageFound}" class="message-display">
+                <p th:text="${response.message}">Hidden message appears here</p>
+            </div>
+
+            <!-- No message found -->
+            <div th:if="${response != null and !response.messageFound and response.status != 'ERROR'}" class="message-display message-empty">
+                <p>No hidden message was found in this image.</p>
+            </div>
+
+            <!-- Error state -->
+            <div th:if="${response != null and response.status == 'ERROR'}" class="message-display message-error">
+                <p th:text="${response.errorMessage}">An error occurred.</p>
+            </div>
+
+            <!-- Empty state (direct GET access) -->
+            <div th:if="${response == null or response.status == 'EMPTY'}" class="message-display message-empty">
+                <p>Upload an image from the Read page to see its hidden message.</p>
+            </div>
+        </div>
+
+        <!-- Mode switch at bottom -->
+        <div class="mode-switch">
+            <a th:href="@{/}">Read</a>
+            <a th:href="@{/create}">Create</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

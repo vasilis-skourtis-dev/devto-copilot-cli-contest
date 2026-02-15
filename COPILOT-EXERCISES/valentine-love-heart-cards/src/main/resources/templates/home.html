@@ -1,13 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medieval PostCard Reader</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Valentine Love Heart Cards</title>
+    <link rel="stylesheet" th:href="@{/styles/valentine.css}"/>
 </head>
 <body>
-<div>
-    This is Home ...
+
+<div class="heart-page">
+    <!-- Heart background shape -->
+    <div class="heart-shape">
+        <div class="heart-fill"></div>
+    </div>
+
+    <!-- Content layer -->
+    <div class="heart-content">
+
+        <div class="page-title">&#x1F48C; Valentine Cards</div>
+
+        <!-- Main area at ~30% from top -->
+        <div class="main-area">
+            <form id="readForm" method="post" enctype="multipart/form-data"
+                  th:action="@{/cards/read}">
+                <input type="file" id="imageInput" name="image"
+                       accept="image/png,image/bmp,image/gif"
+                       class="hidden-input"
+                       onchange="document.getElementById('readForm').submit();"/>
+            </form>
+
+            <!-- Bow button triggers file selection -->
+            <a href="javascript:void(0);" class="bow-button"
+               onclick="document.getElementById('imageInput').click();">
+                &#x1F380;
+            </a>
+            <span class="bow-button-label">Upload a card to read</span>
+        </div>
+
+        <!-- Mode switch at bottom -->
+        <div class="mode-switch">
+            <a th:href="@{/}" class="active">Read</a>
+            <a th:href="@{/create}">Create</a>
+        </div>
+
+    </div>
 </div>
+
 </body>
 </html>

@@ -1,13 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medieval PostCard Reader</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Valentine Love Heart Cards - Create</title>
+    <link rel="stylesheet" th:href="@{/styles/valentine.css}"/>
 </head>
 <body>
-<div>
-    This is Home ...
+
+<div class="heart-page">
+    <!-- Heart background shape -->
+    <div class="heart-shape">
+        <div class="heart-fill"></div>
+    </div>
+
+    <!-- Content layer -->
+    <div class="heart-content">
+
+        <div class="page-title">&#x1F48C; Create a Card</div>
+
+        <!-- Main area at ~30% from top -->
+        <div class="main-area">
+            <form id="createForm" class="create-form" method="post" enctype="multipart/form-data"
+                  th:action="@{/cards/create}">
+
+                <textarea name="message" class="form-textarea"
+                          placeholder="Write your secret valentine message here..."
+                          maxlength="5000" required></textarea>
+
+                <div class="form-file-row">
+                    <label class="file-label" for="createImage">
+                        &#x1F5BC; Choose Image
+                    </label>
+                    <input type="file" id="createImage" name="image"
+                           accept="image/png,image/bmp,image/gif"
+                           class="hidden-input" required
+                           onchange="showFileName(this);"/>
+                    <span id="fileName" class="file-name">No file chosen</span>
+                </div>
+
+                <button type="submit" class="btn-create">&#x2764; Create Card</button>
+            </form>
+        </div>
+
+        <!-- Mode switch at bottom -->
+        <div class="mode-switch">
+            <a th:href="@{/}">Read</a>
+            <a th:href="@{/create}" class="active">Create</a>
+        </div>
+
+    </div>
 </div>
+
+<script>
+    function showFileName(input) {
+        var fileNameSpan = document.getElementById('fileName');
+        if (input.files && input.files.length > 0) {
+            fileNameSpan.textContent = input.files[0].name;
+        } else {
+            fileNameSpan.textContent = 'No file chosen';
+        }
+    }
+</script>
+
 </body>
 </html>
