@@ -8,7 +8,7 @@
 		<version>2.7.18</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.guardanangel.cards</groupId>
+	<groupId>org.saint.valentine.copilot.cards</groupId>
 	<artifactId>valentine-love-heart-cards</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
