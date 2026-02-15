@@ -1,0 +1,25 @@
+<div class="l1-textfield">
+    <input type="text" class="tf-input" placeholder="Enter text..." value="My Beloved">
+</div>
+
+<style>
+    .l1-textfield { width: 100%; margin-bottom: 10px; }
+    .tf-input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        background: transparent;
+        padding: 8px 0;
+        font-family: inherit;
+        outline: none;
+    }
+    .tf-input:focus { border-bottom-color: var(--accent-red); }
+    
+    /* The "Read-Only" State (Morphs to label) */
+    .tf-input[readonly] {
+        border-bottom: none;
+        font-weight: bold;
+        color: var(--primary-ink);
+        pointer-events: none;
+    }
+</style>

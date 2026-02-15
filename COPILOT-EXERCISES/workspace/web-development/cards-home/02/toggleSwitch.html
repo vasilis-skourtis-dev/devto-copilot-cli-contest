@@ -1,0 +1,18 @@
+<div class="l1-switch">
+    <label>
+        <input type="radio" name="mode" value="read" checked onchange="toggleMode('read')">
+        <span>Read</span>
+    </label>
+    <span class="separator">/</span>
+    <label>
+        <input type="radio" name="mode" value="create" onchange="toggleMode('create')">
+        <span>Compose</span>
+    </label>
+</div>
+
+<style>
+    .l1-switch { display: flex; justify-content: center; gap: 10px; font-family: monospace; text-transform: uppercase; letter-spacing: 2px; }
+    .l1-switch input { display: none; }
+    .l1-switch span { opacity: 0.5; cursor: pointer; transition: 0.3s; border-bottom: 2px solid transparent;}
+    .l1-switch input:checked + span { opacity: 1; border-color: var(--accent-red); color: var(--accent-red); }
+</style>

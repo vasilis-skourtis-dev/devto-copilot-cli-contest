@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Heart Envelope</title>
+    <style>
+        /* --- 1. RESET & VARIABLES --- */
+        :root {
+            --bg-closed: #ffe6ea;     /* Soft pink for home */
+            --bg-opened: #8e7386;     /* Darker purple for opened state (from your image) */
+            --heart-red: #ff3366;     /* The heart color */
+            --text-color: #5a2d3a;
+            --switch-off: #f1c40f;
+            --switch-on: #e74c3c;
+            --transition-speed: 0.8s;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-closed);
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            transition: background-color var(--transition-speed);
+        }
+
+        /* --- 2. MAIN CONTAINER --- */
+        .main-container {
+            position: relative;
+            width: 340px; /* Width of one heart */
+            height: 500px;
+            perspective: 1000px;
+            transition: width var(--transition-speed);
+        }
+
+        /* When open, the container widens to fit 3 hearts */
+        body.is-open .main-container {
+            width: 900px; /* 3 x 300px roughly */
+        }
+        
+        body.is-open {
+            background-color: var(--bg-opened);
+        }
+
+        /* --- 3. THE HEART PANELS (Left, Center, Right) --- */
+        .heart-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 340px;
+            height: 340px; /* Aspect ratio for heart */
+            
+            /* The Heart Shape Background */
+            /* We use a CSS mask or background-image. 
+               For simplicity here, I will use a pure CSS heart shape 
+               so it works without your specific images, but you can swap 
+               background: url('your-heart.png') */
+            background-color: var(--heart-red); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform var(--transition-speed) ease-in-out, opacity 0.5s;
+            
+            /* CSS Heart Shape via Clip-path (Responsive) */
+            clip-path: path('M170 310 C 170 310, 0 210, 0 100 C 0 30, 70 -10, 150 20 C 160 25, 170 35, 170 35 C 170 35, 180 25, 190 20 C 270 -10, 340 30, 340 100 C 340 210, 170 310, 170 310 Z');
+            
+            /* Shadow filter for depth */
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+            z-index: 10;
+        }
+
+        /* CENTER PANEL: Stays put */
+        .panel-center {
+            z-index: 20; /* On top when closed */
+        }
+
+        /* LEFT PANEL: Slides Left */
+        .panel-left {
+            z-index: 15;
+            transform: scale(0.95); /* Slightly smaller behind */
+        }
+        body.is-open .panel-left {
+            transform: translateX(-280px) rotate(-5deg);
+        }
+
+        /* RIGHT PANEL: Slides Right */
+        .panel-right {
+            z-index: 15;
+            transform: scale(0.95);
+        }
+        body.is-open .panel-right {
+            transform: translateX(280px) rotate(5deg);
+        }
+
+        /* --- 4. CONTENT AREAS --- */
+        /* Content box inside the heart to prevent text hitting edges */
+        .inner-content {
+            width: 60%;
+            height: 60%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0; /* Hidden by default in closed state */
+            transition: opacity 0.5s 0.3s; /* Delay appearance */
+        }
+
+        body.is-open .inner-content {
+            opacity: 1;
+        }
+
+        /* --- 5. THE BOW (The Button) --- */
+        .bow-container {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30;
+            cursor: pointer;
+            transition: opacity 0.5s, transform 0.3s;
+        }
+
+        .bow-container img {
+            width: 180px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+
+        .bow-container:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Hide Bow when Open */
+        body.is-open .bow-container {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* --- 6. THE MODE SWITCH (Yellow Box) --- */
+        .switch-container {
+            position: absolute;
+            bottom: 60px; /* Positioned inside the heart tip */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 40;
+            
+            background: #fff8e1; /* Light yellow from diagram */
+            border-radius: 20px;
+            padding: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            gap: 10px;
+        }
+
+        .switch-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #aaa;
+            transition: 0.3s;
+        }
+
+        .switch-btn.active {
+            background: var(--heart-red);
+            color: white;
+        }
+
+        /* --- 7. FORM ELEMENTS --- */
+        textarea {
+            width: 100%;
+            height: 100px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            resize: none;
+            font-family: inherit;
+        }
+        
+        textarea::placeholder { color: rgba(255,255,255,0.7); }
+
+        .upload-box {
+            border: 2px dashed white;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .upload-box:hover { background: rgba(255,255,255,0.2); }
+
+        /* Helpers to show/hide based on Mode */
+        .mode-read .show-create { display: none; }
+        .mode-create .show-read { display: none; }
+
+    </style>
+</head>
+<body class="mode-create"> <div class="main-container">
+
+        <div class="heart-panel panel-left">
+            <div class="inner-content">
+                <div class="show-create">
+                    <h4>Step 1</h4>
+                    <div class="upload-box" onclick="alert('Upload Triggered')">
+                        Tap to Upload<br>Cover Image
+                    </div>
+                </div>
+                
+                <div class="show-read">
+                    <h4>Reveal</h4>
+                    <div class="upload-box" onclick="alert('Upload Triggered')">
+                        Upload Card<br>to Decode
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="heart-panel panel-right">
+            <div class="inner-content">
+                <div class="show-create">
+                    <h4>Preview</h4>
+                    <p style="font-size:0.8em">Your card will appear here</p>
+                    <div style="width:60px; height:80px; background:rgba(255,255,255,0.3); margin:10px auto;"></div>
+                </div>
+
+                <div class="show-read">
+                    <h4>Memory</h4>
+                    <p style="font-size:0.8em">Image Saved</p>
+                    <div style="width:60px; height:80px; background:white; margin:10px auto;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="heart-panel panel-center">
+            
+            <div class="bow-container" onclick="openEnvelope()">
+                <img src="https://purepng.com/public/uploads/large/purepng.com-pink-bowbowribbonloopdecorative-pink-14215264993881q8se.png" alt="Open Me">
+                <div style="text-align: center; color: white; margin-top: 10px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Open Me</div>
+            </div>
+
+            <div class="inner-content" style="z-index: 5;">
+                
+                <div class="show-create" style="width:100%">
+                    <h3>New Message</h3>
+                    <textarea placeholder="Write your secret love note..."></textarea>
+                    <button style="margin-top:10px; background:white; color:var(--heart-red); border:none; padding:5px 15px; border-radius:15px; cursor:pointer;">Create Card</button>
+                </div>
+
+                <div class="show-read" style="width:100%">
+                    <h3>Secret Message</h3>
+                    <p style="font-style:italic;">"Your hidden message will appear here..."</p>
+                </div>
+
+            </div>
+
+            <div class="switch-container">
+                <button class="switch-btn active" id="btn-create" onclick="setMode('create')">Compose</button>
+                <button class="switch-btn" id="btn-read" onclick="setMode('read')">Read</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. Open Envelope Logic
+        function openEnvelope() {
+            document.body.classList.add('is-open');
+        }
+
+        // 2. Mode Switch Logic
+        function setMode(mode) {
+            // Update Body Class
+            document.body.classList.remove('mode-create', 'mode-read');
+            document.body.classList.add('mode-' + mode);
+
+            // Update Buttons
+            document.querySelectorAll('.switch-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + mode).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

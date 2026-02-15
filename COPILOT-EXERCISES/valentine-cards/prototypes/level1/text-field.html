@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Field Component - Prototype</title>
+  <link rel="stylesheet" href="../css/valentine-base.css">
+  <link rel="stylesheet" href="../css/level1/text-field.css">
+  <style>
+    body {
+      min-height: 100vh;
+      padding: var(--space-lg);
+    }
+    
+    .demo-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .demo-title {
+      font-family: var(--font-elegant);
+      font-size: var(--font-size-xl);
+      color: var(--color-primary);
+      text-align: center;
+      margin-bottom: var(--space-md);
+    }
+    
+    .demo-grid {
+      display: grid;
+      gap: var(--space-xl);
+      margin-top: var(--space-xl);
+    }
+    
+    .demo-section {
+      padding: var(--space-lg);
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);     }
+    
+    .section-title {
+      font-size: var(--font-size-md);
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+      color: var(--color-text-primary);
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="demo-wrapper">
+    <h1 class="demo-title">✍️ Text Field Component</h1>
+    
+    <div class="demo-grid">
+      
+      <!-- Example 1: Editable Email Field -->
+      <div class="demo-section">
+        <h2 class="section-title">Email Field (Editable)</h2>
+        <div class="text-field" data-editable="true" id="emailField">
+          <label class="text-field__label">Recipient Email 📧</label>
+          <div class="text-field__input-wrapper">
+            <input 
+              type="email" 
+              class="text-field__input" 
+              placeholder="their-email@example.com"
+              value=""
+            />
+            <div class="text-field__display" data-placeholder="No email entered"></div>
+            <button class="text-field__toggle" onclick="toggleEditable('emailField')">
+              Toggle
+            </button>
+          </div>
+          <div class="text-field__error-message">Please enter a valid email</div>
+        </div>
+      </div>
+      
+      <!-- Example 2: Read-only Text Field -->
+      <div class="demo-section">
+        <h2 class="section-title">Read-only Field</h2>
+        <div class="text-field" data-editable="false" id="readonlyField">
+          <label class="text-field__label">Sender Name</label>
+          <div class="text-field__input-wrapper">
+            <input 
+              type="text" 
+              class="text-field__input" 
+              value="Your Secret Admirer ❤️"
+            />
+            <div class="text-field__display">Your Secret Admirer ❤️</div>
+            <button class="text-field__toggle" onclick="toggleEditable('readonlyField')">
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Example 3: Textarea (Message) -->
+      <div class="demo-section">
+        <h2 class="section-title">Message Textarea (Editable)</h2>
+        <div class="text-field" data-editable="true" id="messageField">
+          <label class="text-field__label">Your Secret Message 💌</label>
+          <div class="text-field__input-wrapper">
+            <textarea 
+              class="text-field__input text-field__textarea" 
+              placeholder="To my dearest Valentine,&#10;&#10;You make every day brighter..."
+              maxlength="500"
+              id="messageTextarea"
+            ></textarea>
+            <div class="text-field__display text-field__display--handwriting" data-placeholder="Write your message here..."></div>
+          </div>
+          <div class="text-field__counter" id="charCounter">0 / 500</div>
+        </div>
+        <button 
+          class="btn btn-primary" 
+          style="margin-top: var(--space-md);"
+          onclick="toggleEditable('messageField')"
+        >
+          Toggle Edit/Read Mode
+        </button>
+      </div>
+      
+      <!-- Example 4: With Validation -->
+      <div class="demo-section">
+        <h2 class="section-title">Field with Validation</h2>
+        <div class="text-field" data-editable="true" id="validatedField">
+          <label class="text-field__label">Email with Validation</label>
+          <div class="text-field__input-wrapper">
+            <input 
+              type="email" 
+              class="text-field__input" 
+              placeholder="test@example.com"
+              id="validatedInput"
+            />
+            <div class="text-field__display"></div>
+          </div>
+          <div class="text-field__error-message" id="validationError"></div>
+        </div>
+        <button 
+          class="btn btn-secondary" 
+          style="margin-top: var(--space-md);"
+          onclick="validateEmail()"
+        >
+          Validate
+        </button>
+      </div>
+      
+    </div>
+    
+    <!-- Usage Notes -->
+    <div class="demo-section" style="margin-top: var(--space-xxl);">
+      <h2 class="section-title">Features</h2>
+      <ul>
+        <li>✅ Toggle between editable and read-only states</li>
+        <li>✅ Support for text inputs and textareas</li>
+        <li>✅ Validation states (error, success)</li>
+        <li>✅ Character counter for textareas</li>
+        <li>✅ Handwriting font for romantic messages</li>
+        <li>✅ Mobile-optimized (16px font prevents iOS zoom)</li>
+        <li>✅ Keyboard accessible</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Toggle editable state
+    function toggleEditable(fieldId) {
+      const field = document.getElementById(fieldId);
+      const input = field.querySelector('.text-field__input');
+      const display = field.querySelector('.text-field__display');
+      const isEditable = field.dataset.editable === 'true';
+      
+      if (isEditable) {
+        // Switch to read-only
+        display.textContent = input.value || '';
+        field.dataset.editable = 'false';
+      } else {
+        // Switch to editable
+        field.dataset.editable = 'true';
+        setTimeout(() => input.focus(), 100);
+      }
+      
+      console.log(`${fieldId} editable:`, field.dataset.editable);
+    }
+    
+    // Character counter for textarea
+    const messageTextarea = document.getElementById('messageTextarea');
+    const charCounter = document.getElementById('charCounter');
+    
+    messageTextarea.addEventListener('input', () => {
+      const length = messageTextarea.value.length;
+      const maxLength = messageTextarea.maxLength;
+      charCounter.textContent = `${length} / ${maxLength}`;
+      
+      charCounter.classList.remove('warn', 'error');
+      if (length > maxLength * 0.9) {
+        charCounter.classList.add('warn');
+      }
+      if (length >= maxLength) {
+        charCounter.classList.add('error');
+      }
+    });
+    
+    // Email validation
+    function validateEmail() {
+      const field = document.getElementById('validatedField');
+      const input = document.getElementById('validatedInput');
+      const errorMsg = document.getElementById('validationError');
+      const email = input.value.trim();
+      
+      field.classList.remove('error', 'success');
+      
+      if (!email) {
+        field.classList.add('error');
+        errorMsg.textContent = 'Email is required';
+        return;
+      }
+      
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        field.classList.add('error');
+        errorMsg.textContent = 'Please enter a valid email address';
+        return;
+      }
+      
+      field.classList.add('success');
+      errorMsg.textContent = '';
+      alert('✅ Email is valid!');
+    }
+    
+    // Sync input to display in real-time
+    document.querySelectorAll('.text-field__input').forEach(input => {
+      input.addEventListener('input', () => {
+        const field = input.closest('.text-field');
+        const display = field.querySelector('.text-field__display');
+        if (display) {
+          display.textContent = input.value;
+        }
+      });
+    });
+  </script>
+  
+</body>
+</html>

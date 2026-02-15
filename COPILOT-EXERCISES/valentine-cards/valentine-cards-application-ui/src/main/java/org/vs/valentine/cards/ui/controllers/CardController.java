@@ -145,7 +145,10 @@ public class CardController {
                 ? emailSubject 
                 : CardConstants.DEFAULT_EMAIL_SUBJECT;
 
+//            boolean emailSent = false;
+//            emailSent = true;
             boolean emailSent = emailService.sendCard(recipientEmail, encodedImage, subject, senderName);
+
 
             // Create base64 preview for display
             String imagePreview = Base64.getEncoder().encodeToString(encodedImage);

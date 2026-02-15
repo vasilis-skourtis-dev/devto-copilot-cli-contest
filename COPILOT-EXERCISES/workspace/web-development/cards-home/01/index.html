@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Steganography</title>
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --primary-red: #e91e63;
+            --soft-pink: #ffe4e9;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-color: #4a4a4a;
+            --shadow: 0 8px 32px 0 rgba(233, 30, 99, 0.25);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fce4ec;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* --- BACKGROUND LAYER (The Heart) --- */
+        .heart-background {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2000&auto=format&fit=crop') no-repeat center center;
+            background-size: contain; 
+            z-index: 0;
+            opacity: 0.9;
+            /* Animation to make it float slightly */
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- MAIN COMPONENT LAYER --- */
+        .glass-panel {
+            position: relative;
+            z-index: 10;
+            width: 380px;
+            min-height: 500px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: height 0.3s ease;
+        }
+
+        /* --- THE SWITCH (TOGGLE) --- */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            background: #fff;
+            padding: 5px;
+            border-radius: 30px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .toggle-btn {
+            border: none;
+            background: transparent;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #888;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .toggle-btn.active {
+            background: var(--primary-red);
+            color: white;
+            box-shadow: 0 4px 10px rgba(233, 30, 99, 0.3);
+        }
+
+        /* --- SECTIONS (Read/Create) --- */
+        .mode-section {
+            width: 100%;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            gap: 15px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .mode-section.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- DROP ZONE (Common to both) --- */
+        .drop-zone {
+            width: 100%;
+            height: 180px;
+            border: 2px dashed #cca8b1;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-sizing: border-box;
+            color: #888;
+        }
+
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: var(--primary-red);
+            background: rgba(233, 30, 99, 0.05);
+            color: var(--primary-red);
+        }
+
+        .drop-zone i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            font-style: normal;
+        }
+
+        /* --- INPUTS & BUTTONS --- */
+        textarea, input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            font-family: inherit;
+            box-sizing: border-box;
+            resize: none;
+            outline: none;
+        }
+
+        textarea:focus, input:focus {
+            border-color: var(--primary-red);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #c2185b;
+        }
+
+        /* Hidden File Input */
+        .hidden-input {
+            display: none;
+        }
+
+        /* Discreet Upload Button (Read Mode) */
+        .discreet-btn {
+            background: transparent;
+            color: var(--primary-red);
+            border: 1px solid var(--primary-red);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 5px;
+            align-self: center;
+        }
+        
+        .discreet-btn:hover {
+            background: var(--soft-pink);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="heart-background"></div>
+
+    <div class="glass-panel">
+        
+        <div class="switch-container">
+            <button class="toggle-btn" id="btn-read" onclick="switchMode('read')">Read Card</button>
+            <button class="toggle-btn active" id="btn-create" onclick="switchMode('create')">Create Card</button>
+        </div>
+
+        <div id="section-create" class="mode-section active">
+            <div style="text-align:center; color:#666; font-size: 0.9em; margin-bottom: 5px;">
+                Compose your secret message
+            </div>
+            
+            <textarea rows="3" placeholder="Write your secret love note here..."></textarea>
+            
+            <input type="email" placeholder="Recipient's Email (Optional)">
+
+            <div class="drop-zone" id="drop-zone-create" onclick="triggerUpload('file-create')">
+                <i>❤️</i>
+                <span>Drop cover image here</span>
+                <span style="font-size: 0.8em; opacity: 0.6;">or click to browse</span>
+            </div>
+            <input type="file" id="file-create" class="hidden-input" accept="image/*">
+
+            <button class="action-btn">Encrypt & Send</button>
+        </div>
+
+        <div id="section-read" class="mode-section">
+            <div style="text-align:center; color:#666; font-size: 0.9em; margin-bottom: 15px;">
+                Reveal the hidden message
+            </div>
+
+            <div class="drop-zone" id="drop-zone-read" style="height: 250px;" onclick="triggerUpload('file-read')">
+                <i>💌</i>
+                <span>Drop your Valentine card here</span>
+            </div>
+            <input type="file" id="file-read" class="hidden-input" accept="image/*">
+
+            <button class="discreet-btn" onclick="triggerUpload('file-read')">Select File manually</button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- LOGIC: SWITCH MODES ---
+        function switchMode(mode) {
+            // 1. Toggle Buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + mode).classList.add('active');
+
+            // 2. Toggle Sections
+            document.querySelectorAll('.mode-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('section-' + mode).classList.add('active');
+        }
+
+        // --- LOGIC: FILE UPLOAD ---
+        function triggerUpload(inputId) {
+            document.getElementById(inputId).click();
+        }
+
+        // --- LOGIC: DRAG AND DROP VISUALS ---
+        // We add visual cues when hovering files over the drop zones
+        const dropZones = document.querySelectorAll('.drop-zone');
+
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('dragover');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                
+                // Visual feedback that file was dropped
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    zone.querySelector('span').innerText = "File Selected: " + files[0].name;
+                    zone.style.borderColor = '#4CAF50'; // Green border for success
+                }
+            });
+        });
+
+        // Also update text when clicking and selecting file manually
+        document.querySelectorAll('.hidden-input').forEach(input => {
+            input.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    // Find the sibling dropzone to update text
+                    const zone = this.previousElementSibling; 
+                    zone.querySelector('span').innerText = "File Selected: " + this.files[0].name;
+                    zone.style.borderColor = '#4CAF50';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

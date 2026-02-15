@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mode Switch Component - Prototype</title>
+  <link rel="stylesheet" href="../css/valentine-base.css">
+  <link rel="stylesheet" href="../css/level1/mode-switch.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+    }
+    
+    .demo-container {
+      text-align: center;
+    }
+    
+    .demo-title {
+      font-family: var(--font-elegant);
+      font-size: var(--font-size-xl);
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
+    }
+    
+    .demo-description {
+      color: var(--color-text-secondary);
+      max-width: 500px;
+      margin: 0 auto var(--space-xl);
+    }
+    
+    .status-display {
+      margin-top: var(--space-xl);
+      padding: var(--space-md);
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-lg);
+      font-family: var(--font-handwriting);
+      font-size: var(--font-size-lg);
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="demo-container">
+    <h1 class="demo-title">💌 Mode Switch Component</h1>
+    <p class="demo-description">
+      Toggle between Read and Create modes. Click or tap to switch.
+      Works on mobile and desktop with smooth animations.
+    </p>
+    
+    <!-- MODE SWITCH COMPONENT -->
+    <div class="mode-switch" data-mode="read" id="modeSwitch">
+      <div class="mode-switch__slider"></div>
+      <button class="mode-switch__option active" data-mode="read" data-icon="🔓">
+        Read Card
+      </button>
+      <button class="mode-switch__option" data-mode="create" data-icon="✍️">
+        Create Card
+      </button>
+    </div>
+    
+    <div class="status-display" id="statusDisplay">
+      Current Mode: <strong>Read</strong>
+    </div>
+  </div>
+  
+  <div class="demo-container">
+    <h2 class="text-lg font-semibold">Usage Notes</h2>
+    <ul style="text-align: left; max-width: 500px; margin: var(--space-md) auto;">
+      <li>✅ Touch-friendly (48px minimum touch target on mobile)</li>
+      <li>✅ Smooth sliding animation</li>
+      <li>✅ Responsive (adapts to screen size)</li>
+      <li>✅ Keyboard accessible (Tab + Enter/Space)</li>
+      <li>✅ Works as state controller for parent components</li>
+    </ul>
+  </div>
+
+  <script>
+    // Mode Switch Logic
+    const modeSwitch = document.getElementById('modeSwitch');
+    const statusDisplay = document.getElementById('statusDisplay');
+    const options = modeSwitch.querySelectorAll('.mode-switch__option');
+    
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        const mode = option.dataset.mode;
+        setMode(mode);
+      });
+    });
+    
+    function setMode(mode) {
+      // Update switch state
+      modeSwitch.dataset.mode = mode;
+      
+      // Update active states
+      options.forEach(opt => {
+        if (opt.dataset.mode === mode) {
+          opt.classList.add('active');
+        } else {
+          opt.classList.remove('active');
+        }
+      });
+      
+      // Update status display
+      statusDisplay.innerHTML = `Current Mode: <strong>${mode === 'read' ? 'Read' : 'Create'}</strong>`;
+      
+      // Dispatch custom event for parent components to listen
+      const event = new CustomEvent('modechange', { 
+        detail: { mode },
+        bubbles: true 
+      });
+      modeSwitch.dispatchEvent(event);
+      
+      console.log('Mode changed to:', mode);
+    }
+    
+    // Example: Listen to mode changes
+    modeSwitch.addEventListener('modechange', (e) => {
+      console.log('Mode change event received:', e.detail.mode);
+      // Parent component can respond here
+    });
+  </script>
+  
+</body>
+</html>

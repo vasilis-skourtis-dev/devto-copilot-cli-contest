@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💌 Valentine Cards - Steganography Magic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #ffc0ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* ============================================
+           BODY CONTENT (Top & Bottom Pink Sections)
+           ============================================ */
+        .body-content {
+            background-color: #ffc0ff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .body-content.top {
+            flex: 0 0 auto;
+        }
+
+        .body-content.bottom {
+            flex: 0 0 auto;
+        }
+
+        /* ============================================
+           MAIN CONTAINER (Blue/Purple Section)
+           ============================================ */
+        .main-container {
+            background-color: #b3b3ff;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* ============================================
+           HEART ENVELOPE COMPONENT (Red Container)
+           ============================================ */
+        .heart-envelope {
+            background-color: #ff0000;
+            border-radius: 20px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 800px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ============================================
+           BOW BUTTON (Closed State)
+           ============================================ */
+        .bow-button {
+            background-color: #ff00ff;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+CiAgPCEtLSBMZWZ0IGxvb3AgLS0+CiAgPHBhdGggZD0iTSAyMCA2MCBRIDI1IDc1LCA0MCA4MCBRIDQ1IDgwLCA1MCA3MCBRIDU1IDYwLCA1MCA1MCBRIDU1IDQwLCA0MCA0MCBRIDI1IDQ1LCAyMCA2MCBaIiBmaWxsPSIjZmY2YmM0IiBzdHJva2U9IiNlODAwYTQiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gUmlnaHQgbG9vcCAtLT4KICA8cGF0aCBkPSJNIDEwMCA2MCBRIDY1IDQ1LCA4MCA0MCBRIDY1IDQwLCA3MCA1MCBRIDY1IDYwLCA3MCA3MCBRIDY1IDgwLCA4MCA4MCBRIDY1IDc1LCAxMDAgNjAgWiIgZmlsbD0iI2ZmNmJjNCIgc3Ryb2tlPSIjZTgwMGE0IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8IS0tIENlbnRlciBrbm90IC0tPgogIDxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjE1IiBmaWxsPSIjZmY4ZGNhIiBzdHJva2U9IiNlODAwYTQiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjgiIGZpbGw9IiNmZmI4ZGMiLz4KICA8IS0tIFJpYmJvbnMgLS0+CiAgPHBhdGggZD0iTSA1MCA3NSBMIDQwIDExMCBMIDU1IDEwNSBaIiBmaWxsPSIjZmY2YmM0Ii8+CiAgPHBhdGggZD0iTSA3MCA3NSBMIDgwIDExMCBMIDY1IDEwNSBaIiBmaWxsPSIjZmY2YmM0Ii8+Cjwvc3ZnPg==');
+            background-repeat: no-repeat;
+            background-position: center 30px;
+            background-size: 100px 100px;
+            border: none;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            min-height: 280px;
+            padding: 140px 40px 40px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bow-button:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            background-color: #ff33ff;
+        }
+
+        .bow-button:active {
+            transform: translateY(-4px);
+        }
+
+        .bow-button.hidden {
+            display: none;
+        }
+
+        .bow-button__text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+            margin-bottom: 10px;
+        }
+
+        .bow-button__hint {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+        }
+
+        /* ============================================
+           HEART CONTENT (Opened State)
+           ============================================ */
+        .heart-content-wrapper {
+            display: none;
+            width: 100%;
+            flex: 1;
+        }
+
+        .heart-content-wrapper.opened {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* ============================================
+           WINGS (Left & Right)
+           ============================================ */
+        .wing {
+            background-color: #ff8000;
+            border-radius: 12px;
+            padding: 20px;
+            flex: 0 0 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .wing.left {
+            animation: slideInLeft 0.7s ease;
+        }
+
+        .wing.right {
+            animation: slideInRight 0.7s ease;
+        }
+
+        @keyframes slideInLeft {
+            from { 
+                transform: translateX(-120px) rotateY(-90deg);
+                opacity: 0;
+            }
+            to { 
+                transform: translateX(0) rotateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from { 
+                transform: translateX(120px) rotateY(90deg);
+                opacity: 0;
+            }
+            to { 
+                transform: translateX(0) rotateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ============================================
+           MAIN AREA (Center Content)
+           ============================================ */
+        .main-area {
+            background-color: #ff00ff;
+            border-radius: 12px;
+            padding: 40px 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        /* ============================================
+           MODE SWITCH (Yellow Toggle)
+           ============================================ */
+        .mode-switch-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .mode-switch {
+            background-color: #ffff99;
+            border-radius: 50px;
+            padding: 6px;
+            display: inline-flex;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        .mode-switch__slider {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: calc(50% - 6px);
+            height: calc(100% - 12px);
+            background-color: #ff0000;
+            border-radius: 40px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+
+        .mode-switch[data-mode="create"] .mode-switch__slider {
+            transform: translateX(calc(100% + 6px));
+        }
+
+        .mode-switch__option {
+            padding: 12px 36px;
+            border: none;
+            background: transparent;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 40px;
+            transition: color 0.3s ease;
+            position: relative;
+            z-index: 2;
+            min-width: 130px;
+        }
+
+        .mode-switch__option.active {
+            color: white;
+        }
+
+        .mode-switch__option:not(.active) {
+            color: #333;
+        }
+
+        /* ============================================
+           CONTENT AREAS (Read/Create Mode)
+           ============================================ */
+        .content-area {
+            display: none;
+            width: 100%;
+            color: white;
+        }
+
+        .content-area.active {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .content-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-description {
+            font-size: 17px;
+            line-height: 1.5;
+            opacity: 0.95;
+        }
+
+        /* ============================================
+           UPLOAD ZONE
+           ============================================ */
+        .upload-zone {
+            margin-top: 20px;
+            padding: 50px 30px;
+            border: 3px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .upload-zone:hover {
+            border-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .upload-zone.drag-over {
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: white;
+            border-style: solid;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 54px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .upload-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .upload-hint {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* ============================================
+           CREATE FORM
+           ============================================ */
+        .create-form {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.12);
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 130px;
+            resize: vertical;
+            font-family: 'Dancing Script', cursive;
+            font-size: 19px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: #ff00ff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background-color: #fff9f0;
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 768px) {
+            .heart-content-wrapper.opened {
+                flex-direction: column;
+            }
+
+            .wing {
+                flex: 0 0 auto;
+                padding: 15px;
+                min-height: 70px;
+                writing-mode: horizontal-tb;
+            }
+
+            .wing.left {
+                animation: slideInTop 0.6s ease;
+            }
+
+            .wing.right {
+                animation: slideInBottom 0.6s ease;
+            }
+
+            @keyframes slideInTop {
+                from { 
+                    transform: translateY(-60px);
+                    opacity: 0;
+                }
+                to { 
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideInBottom {
+                from { 
+                    transform: translateY(60px);
+                    opacity: 0;
+                }
+                to { 
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .bow-button {
+                max-width: 350px;
+                min-height: 260px;
+                padding: 130px 30px 30px;
+                background-size: 90px 90px;
+            }
+
+            .bow-button__text {
+                font-size: 26px;
+            }
+
+            .content-title {
+                font-size: 30px;
+            }
+
+            .mode-switch__option {
+                min-width: 110px;
+                padding: 11px 28px;
+                font-size: 14px;
+            }
+
+            .main-area {
+                padding: 30px 20px;
+            }
+        }
+
+        /* ============================================
+           UTILITIES
+           ============================================ */
+        .hidden {
+            display: none !important;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- TOP BODY CONTENT (Pink Section) -->
+    <div class="body-content top">
+        <h1 style="font-family: 'Dancing Script', cursive; font-size: 48px; color: #e800a4; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+            💌 Valentine Cards
+        </h1>
+        <p style="font-size: 18px; color: #b300b3; margin-top: 10px;">
+            Hide secret messages in beautiful images using steganography
+        </p>
+    </div>
+
+    <!-- MAIN CONTAINER (Blue/Purple Section) -->
+    <div class="main-container">
+        <!-- HEART ENVELOPE COMPONENT (Red Container) -->
+        <div class="heart-envelope">
+            <!-- BOW BUTTON (Closed State) -->
+            <button class="bow-button" id="bowButton">
+                <div class="bow-button__text">Open Your Heart</div>
+                <div class="bow-button__hint">Click to reveal the magic ✨</div>
+            </button>
+
+            <!-- HEART CONTENT (Opened State: Wings + Main Area) -->
+            <div class="heart-content-wrapper" id="heartContent">
+                <!-- LEFT WING -->
+                <div class="wing left">Left Wing</div>
+
+                <!-- MAIN AREA (Center) -->
+                <div class="main-area">
+                    <!-- READ MODE CONTENT -->
+                    <div class="content-area active" id="readContent">
+                        <div class="content-header">
+                            <div class="content-title">💌 Read a Card</div>
+                            <div class="content-description">
+                                Upload a Valentine card image to reveal its secret message
+                            </div>
+                        </div>
+                        
+                        <div class="upload-zone" id="uploadZone">
+                            <span class="upload-icon">📤</span>
+                            <div class="upload-text">Drop your image here</div>
+                            <div class="upload-hint">or click to browse (PNG, JPEG)</div>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/png,image/jpeg" />
+                    </div>
+
+                    <!-- CREATE MODE CONTENT -->
+                    <div class="content-area" id="createContent">
+                        <div class="content-header">
+                            <div class="content-title">✨ Create a Card</div>
+                            <div class="content-description">
+                                Hide your secret message in a beautiful image
+                            </div>
+                        </div>
+                        
+                        <form class="create-form" id="createForm">
+                            <div class="form-group">
+                                <label class="form-label" for="messageInput">Your Secret Message</label>
+                                <textarea 
+                                    class="form-textarea" 
+                                    id="messageInput" 
+                                    placeholder="Write your heartfelt message..."
+                                    maxlength="10000"
+                                ></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="recipientInput">Recipient Email</label>
+                                <input 
+                                    class="form-input" 
+                                    type="email" 
+                                    id="recipientInput" 
+                                    placeholder="love@example.com"
+                                />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Background Image</label>
+                                <div class="upload-zone" id="createUploadZone">
+                                    <span class="upload-icon">🖼️</span>
+                                    <div class="upload-text">Upload background image</div>
+                                    <div class="upload-hint">PNG or JPEG</div>
+                                </div>
+                                <input type="file" id="createFileInput" accept="image/png,image/jpeg" />
+                            </div>
+                            
+                            <button type="submit" class="btn-primary">
+                                Create & Send 💝
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- RIGHT WING -->
+                <div class="wing right">Right Wing</div>
+            </div>
+
+            <!-- MODE SWITCH (Yellow Toggle) -->
+            <div class="mode-switch-container">
+                <div class="mode-switch" id="modeSwitch" data-mode="read">
+                    <div class="mode-switch__slider"></div>
+                    <button class="mode-switch__option active" data-mode="read">Read Card</button>
+                    <button class="mode-switch__option" data-mode="create">Create Card</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM BODY CONTENT (Pink Section) -->
+    <div class="body-content bottom">
+        <p style="font-size: 14px; color: #b300b3; opacity: 0.8;">
+            Built with Spring Boot 2.7.18 | Java 1.8 | LSB Steganography Algorithm
+        </p>
+    </div>
+
+    <script>
+        // ============================================
+        // STATE MANAGEMENT
+        // ============================================
+        const AppState = {
+            heartOpened: false,
+            mode: 'read',
+            readMode: {
+                uploadedFile: null
+            },
+            createMode: {
+                message: '',
+                recipient: '',
+                backgroundFile: null
+            }
+        };
+
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+        const bowButton = document.getElementById('bowButton');
+        const heartContent = document.getElementById('heartContent');
+        const modeSwitch = document.getElementById('modeSwitch');
+        const modeSwitchOptions = modeSwitch.querySelectorAll('.mode-switch__option');
+        const readContent = document.getElementById('readContent');
+        const createContent = document.getElementById('createContent');
+
+        // Upload zones
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const createUploadZone = document.getElementById('createUploadZone');
+        const createFileInput = document.getElementById('createFileInput');
+
+        // Form
+        const createForm = document.getElementById('createForm');
+
+        // ============================================
+        // HEART OPENING ANIMATION
+        // ============================================
+        bowButton.addEventListener('click', () => {
+            if (!AppState.heartOpened) {
+                AppState.heartOpened = true;
+                bowButton.classList.add('hidden');
+                heartContent.classList.add('opened');
+            }
+        });
+
+        // ============================================
+        // MODE SWITCH FUNCTIONALITY
+        // ============================================
+        modeSwitchOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                const newMode = e.target.dataset.mode;
+                
+                if (newMode !== AppState.mode) {
+                    AppState.mode = newMode;
+                    
+                    // Update mode switch UI
+                    modeSwitch.dataset.mode = newMode;
+                    modeSwitchOptions.forEach(opt => {
+                        if (opt.dataset.mode === newMode) {
+                            opt.classList.add('active');
+                        } else {
+                            opt.classList.remove('active');
+                        }
+                    });
+                    
+                    // Update content visibility
+                    if (newMode === 'read') {
+                        readContent.classList.add('active');
+                        createContent.classList.remove('active');
+                    } else {
+                        createContent.classList.add('active');
+                        readContent.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // ============================================
+        // READ MODE: FILE UPLOAD
+        // ============================================
+        uploadZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFileSelect(e.target.files[0], 'read');
+        });
+
+        // Drag and drop
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('drag-over');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('drag-over');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('drag-over');
+            handleFileSelect(e.dataTransfer.files[0], 'read');
+        });
+
+        // ============================================
+        // CREATE MODE: FILE UPLOAD
+        // ============================================
+        createUploadZone.addEventListener('click', () => {
+            createFileInput.click();
+        });
+
+        createFileInput.addEventListener('change', (e) => {
+            handleFileSelect(e.target.files[0], 'create');
+        });
+
+        // Drag and drop for create mode
+        createUploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            createUploadZone.classList.add('drag-over');
+        });
+
+        createUploadZone.addEventListener('dragleave', () => {
+            createUploadZone.classList.remove('drag-over');
+        });
+
+        createUploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            createUploadZone.classList.remove('drag-over');
+            handleFileSelect(e.dataTransfer.files[0], 'create');
+        });
+
+        // ============================================
+        // FILE HANDLING
+        // ============================================
+        function handleFileSelect(file, mode) {
+            if (!file) return;
+
+            // Validate file type
+            const validTypes = ['image/png', 'image/jpeg'];
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload a PNG or JPEG image');
+                return;
+            }
+
+            // Validate file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB');
+                return;
+            }
+
+            if (mode === 'read') {
+                AppState.readMode.uploadedFile = file;
+                console.log('📖 Read mode: File selected', file.name);
+                // TODO: Call backend /api/card/decode
+                alert(`✅ File selected: ${file.name}\n\nIn production, this would call:\nPOST /api/card/decode\n\nand display the decoded secret message!`);
+            } else {
+                AppState.createMode.backgroundFile = file;
+                console.log('✨ Create mode: Background selected', file.name);
+                const textElement = createUploadZone.querySelector('.upload-text');
+                textElement.textContent = `✓ ${file.name}`;
+            }
+        }
+
+        // ============================================
+        // CREATE FORM SUBMISSION
+        // ============================================
+        createForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const message = document.getElementById('messageInput').value;
+            const recipient = document.getElementById('recipientInput').value;
+            
+            if (!message.trim()) {
+                alert('Please write a message');
+                return;
+            }
+            
+            if (!recipient.trim()) {
+                alert('Please enter recipient email');
+                return;
+            }
+            
+            if (!AppState.createMode.backgroundFile) {
+                alert('Please upload a background image');
+                return;
+            }
+            
+            AppState.createMode.message = message;
+            AppState.createMode.recipient = recipient;
+            
+            console.log('💝 Create card:', {
+                message: message.substring(0, 50) + '...',
+                recipient,
+                file: AppState.createMode.backgroundFile.name
+            });
+            
+            // TODO: Call backend /api/card/generate then /api/card/send
+            alert(`✅ Card prepared!\n\nMessage: ${message.substring(0, 50)}...\nTo: ${recipient}\nImage: ${AppState.createMode.backgroundFile.name}\n\nIn production, this would:\n1. POST /api/card/generate (encode message)\n2. POST /api/card/send (email to recipient)`);
+        });
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        console.log('💌 Valentine Cards v2 initialized');
+        console.log('📊 App State:', AppState);
+    </script>
+</body>
+</html>

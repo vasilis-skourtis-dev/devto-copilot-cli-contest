@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fragmented Area Component - Prototype</title>
+  <link rel="stylesheet" href="../css/valentine-base.css">
+  <link rel="stylesheet" href="../css/level1/fragmented-area.css">
+  <style>
+    body {
+      min-height: 100vh;
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, #ffeaa7, #fab1a0, #ff7675);
+    }
+    
+    .demo-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .demo-title {
+      font-family: var(--font-elegant);
+      font-size: var(--font-size-xxl);
+      color: white;
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .demo-grid {
+      display: grid;
+      gap: var(--space-xl);
+      margin-top: var(--space-xl);
+    }
+    
+    .variant-label {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="demo-wrapper">
+    <h1 class="demo-title">🎨 Fragmented Area Component</h1>
+    
+    <div class="demo-grid">
+      
+      <!-- Variant 1: Gradient Background -->
+      <div>
+        <div class="variant-label">Variant 1: Gradient Background</div>
+        <div class="fragmented-area fragmented-area--gradient">
+          <div class="fragmented-area__inner fragmented-area__inner--center">
+            <h2 class="fragmented-area__title">Welcome!</h2>
+            <p class="fragmented-area__content">
+              This is a fragmented area with a gradient background
+              and a dashed border inner content area.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Variant 2: With Decorative Corners -->
+      <div>
+        <div class="variant-label">Variant 2: With Decorative Corners</div>
+        <div class="fragmented-area fragmented-area--gradient">
+          <div class="fragmented-area__corner fragmented-area__corner--top-left"></div>
+          <div class="fragmented-area__corner fragmented-area__corner--top-right"></div>
+          <div class="fragmented-area__corner fragmented-area__corner--bottom-left"></div>
+          <div class="fragmented-area__corner fragmented-area__corner--bottom-right"></div>
+          
+          <div class="fragmented-area__inner fragmented-area__inner--center">
+            <h2 class="text-xl font-elegant text-primary">Your Secret Message</h2>
+            <p class="font-handwriting text-md" style="margin-top: var(--space-md);">
+              To my dearest Valentine,
+              <br><br>
+              You make every day brighter with your smile.
+              This message is hidden within the image,
+              waiting for you to discover it.
+              <br><br>
+              With all my love ❤️
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Variant 3: Heart Pattern Background -->
+      <div>
+        <div class="variant-label">Variant 3: Heart Pattern Background</div>
+        <div class="fragmented-area fragmented-area--gradient fragmented-area--hearts">
+          <div class="fragmented-area__inner fragmented-area__inner--center">
+            <div class="text-xxl">💌</div>
+            <h2 class="fragmented-area__title">Love Letter</h2>
+            <p style="text-align: center; color: var(--color-text-secondary);">
+              Perfect for displaying romantic messages
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Variant 4: Card Frame (Double Border) -->
+      <div>
+        <div class="variant-label">Variant 4: Card Frame Style</div>
+        <div class="fragmented-area fragmented-area--card-frame fragmented-area--animate-in">
+          <div class="fragmented-area__inner">
+            <h3 class="text-primary font-elegant text-lg text-center">
+              ❤️ Valentine's Day Card ❤️
+            </h3>
+            <hr style="margin: var(--space-md) 0; border: 1px solid var(--color-accent);">
+            <p class="font-handwriting text-md">
+              Roses are red,
+              Violets are blue,
+              This steganography app,
+              Was made just for you!
+            </p>
+            <p class="text-sm text-secondary" style="margin-top: var(--space-md); text-align: right;">
+              - Your Secret Admirer
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Variant 5: Frost Effect -->
+      <div>
+        <div class="variant-label">Variant 5: Frost/Glass Effect</div>
+        <div class="fragmented-area fragmented-area--frost">
+          <div class="fragmented-area__inner">
+            <div class="flex-center" style="gap: var(--space-md); flex-wrap: wrap;">
+              <div class="text-xxl">🌹</div>
+              <div>
+                <h3 class="font-semibold text-lg">Modern & Elegant</h3>
+                <p class="text-secondary text-sm">With glassmorphism effect</p>
+              </div>
+              <div class="text-xxl">💝</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Variant 6: Image Background -->
+      <div>
+        <div class="variant-label">Variant 6: With Image Background</div>
+        <div class="fragmented-area fragmented-area--image" 
+             style="background-image: url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 200 200&quot;><defs><pattern id=&quot;hearts&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;40&quot; height=&quot;40&quot; patternUnits=&quot;userSpaceOnUse&quot;><text x=&quot;10&quot; y=&quot;30&quot; font-size=&quot;24&quot; fill=&quot;%23e63946&quot; opacity=&quot;0.3&quot;>❤️</text></pattern></defs><rect width=&quot;200&quot; height=&quot;200&quot; fill=&quot;url(%23hearts)&quot;/></svg>');">
+          <div class="fragmented-area__inner fragmented-area__inner--center">
+            <h2 class="text-primary text-xl font-elegant">Perfect for Cards</h2>
+            <p class="text-center" style="margin-top: var(--space-md);">
+              The image background + overlay creates a beautiful effect
+              for displaying messages with romantic imagery.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Usage Notes -->
+    <div style="margin-top: var(--space-xxl); padding: var(--space-lg); background: rgba(255, 255, 255, 0.9); border-radius: var(--radius-lg);">
+      <h2 class="text-lg font-semibold text-center" style="margin-bottom: var(--space-md);">Component Features</h2>
+      <ul style="max-width: 600px; margin: 0 auto;">
+        <li>✅ Multiple style variants (gradient, image, frost, card-frame)</li>
+        <li>✅ Decorative corner accents</li>
+        <li>✅ Inner dashed content area</li>
+        <li>✅ Background patterns (hearts, images)</li>
+        <li>✅ Responsive design</li>
+        <li>✅ Animation support</li>
+        <li>✅ Perfect for message displays</li>
+        <li>✅ Flexible content alignment</li>
+      </ul>
+    </div>
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,22 @@
+<div class="l1-dropzone" onclick="document.getElementById('fileInput').click()">
+    <div class="dz-content">
+        <i class="icon">♥</i>
+        <span class="dz-text">Tap or Drop Image</span>
+    </div>
+    <input type="file" id="fileInput" hidden>
+</div>
+
+<style>
+    .l1-dropzone {
+        border: var(--contour-dash);
+        border-radius: var(--radius-std);
+        min-height: 200px; /* Large touch target */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s;
+        touch-action: manipulation; /* Optimizes for touch */
+    }
+    .l1-dropzone:active { background: rgba(0,0,0,0.05); }
+</style>

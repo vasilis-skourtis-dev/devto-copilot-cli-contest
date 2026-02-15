@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Heart Envelope</title>
+    <style>
+        /* --- 1. RESET & VARIABLES --- */
+        :root {
+            --bg-body: #fce4ec;       /* Light Pink Background */
+            --bg-container: #e3f2fd;  /* Light Blue Container (per your diagram) */
+            --heart-width: 360px;
+            --heart-height: 320px;    /* Approx ratio for the heart image */
+            --switch-bg: #fffde7;     /* Light Yellow (per your diagram) */
+            --switch-active: #ff5252;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-body);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* --- 2. MAIN CONTAINER (Blue area in diagram) --- */
+        .main-container {
+            /* In a real app, this might constrain the width */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* background-color: var(--bg-container); Uncomment to see the structure box */
+        }
+
+        /* --- 3. HEART COMPONENT (Red area in diagram) --- */
+        .heart-envelope {
+            position: relative;
+            width: 400px;
+            height: 380px;
+
+            /* Using your Heart Image */
+            background-image: url('loveHeartMain.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            /* Float Animation */
+            animation: floatHeart 3s ease-in-out infinite;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* --- 4. BOW ELEMENT CONTAINER (Pink area in diagram) --- */
+        .bow-container {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .bow-button {
+            width: 180px;
+            height: 140px;
+            background-color: transparent;
+            background-image: url('image_f2c543.png'); /* The Pink Bow */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+        }
+
+        .bow-button:hover {
+            transform: scale(1.1);
+        }
+
+        .bow-button:active {
+            transform: scale(0.95);
+        }
+
+        /* --- 5. MODE SWITCH (Yellow area in diagram) --- */
+        .mode-switch-container {
+            position: absolute;
+            bottom: 70px; /* Positioned near the bottom tip */
+            display: flex;
+            gap: 10px;
+            background: var(--switch-bg);
+            padding: 8px;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        /* The individual switch buttons */
+        .switch-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            transition: all 0.3s ease;
+            position: relative; /* For Tooltip positioning */
+        }
+
+        /* Active State styling */
+        .switch-option.active {
+            background-color: var(--switch-active);
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Inactive State styling */
+        .switch-option:not(.active) {
+            background-color: rgba(255, 255, 255, 0.5);
+            opacity: 0.6;
+        }
+        .switch-option:not(.active):hover {
+            opacity: 1;
+            background-color: white;
+        }
+
+        /* --- TOOLTIP (The "Hypertext" on hover) --- */
+        .switch-option::after {
+            content: attr(data-title); /* Grabs the text from HTML */
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .switch-option:hover::after {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <div class="heart-envelope">
+
+        <div class="bow-container">
+            <button class="bow-button" onclick="openEnvelope()" title="Click to Open"></button>
+        </div>
+
+        <div class="mode-switch-container">
+
+            <button class="switch-option" id="mode-read" onclick="setMode('read')" data-title="Read Card">
+                🔒
+            </button>
+
+            <button class="switch-option active" id="mode-create" onclick="setMode('create')" data-title="Create Card">
+                ✍️
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // Simple Logic to Toggle the visual state of the switch
+    function setMode(mode) {
+        // 1. Remove 'active' class from all options
+        document.querySelectorAll('.switch-option').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        // 2. Add 'active' class to the clicked option
+        document.getElementById('mode-' + mode).classList.add('active');
+
+        // 3. (Optional) Log to console to verify
+        console.log("Mode switched to: " + mode);
+    }
+
+    function openEnvelope() {
+        alert("Opening the envelope... (Animation to be added in next step)");
+    }
+</script>
+
+</body>
+</html>

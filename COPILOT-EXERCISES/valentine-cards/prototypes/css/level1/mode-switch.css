@@ -1,0 +1,97 @@
+/**
+ * Level 1 Component: Mode Switch
+ * Toggle between Read and Create modes
+ */
+
+.mode-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.mode-switch__option {
+  position: relative;
+  padding: var(--space-sm) var(--space-lg);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: color var(--transition-base);
+  z-index: var(--z-base);
+  min-width: 120px;
+  text-align: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mode-switch__option:hover {
+  color: var(--color-text-primary);
+}
+
+.mode-switch__option.active {
+  color: var(--color-text-light);
+}
+
+/* Sliding background indicator */
+.mode-switch__slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: calc(100% - 8px);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  border-radius: var(--radius-pill);
+  transition: transform var(--transition-base) var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+  z-index: 0;
+}
+
+/* State-based slider positioning */
+.mode-switch[data-mode="read"] .mode-switch__slider {
+  width: calc(50% - 4px);
+  transform: translateX(0);
+}
+
+.mode-switch[data-mode="create"] .mode-switch__slider {
+  width: calc(50% - 4px);
+  transform: translateX(100%);
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+  .mode-switch {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .mode-switch__option {
+    flex: 1;
+    min-width: auto;
+  }
+}
+
+/* Icon support */
+.mode-switch__option::before {
+  content: attr(data-icon);
+  margin-right: var(--space-xs);
+  font-size: var(--font-size-lg);
+}
+
+/* Touch feedback */
+.mode-switch__option:active {
+  transform: scale(0.98);
+}
+
+/* Accessibility */
+.mode-switch__option:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
