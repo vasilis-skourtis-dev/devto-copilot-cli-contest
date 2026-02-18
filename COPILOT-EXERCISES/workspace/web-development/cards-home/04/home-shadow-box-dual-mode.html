@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Heart</title>
+    <style>
+        /* --- 1. PAGE SETUP --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fce4ec;
+        }
+
+        /* --- 2. THE MAIN CONTAINER (The "Canvas") --- */
+        .heart-layout {
+            position: relative;
+
+            /* Responsive Width: 
+               Occupies 90% of screen, but stops growing at 600px */
+            width: 90%;
+            max-width: 600px;
+
+            /* CRITICAL: Lock the Aspect Ratio 
+               Replace '1 / 1' with your image's width / height.
+               Example: If your image is 800x600, write: aspect-ratio: 800 / 600; */
+            aspect-ratio: 10 / 9;
+
+            /* Stack Layers */
+            display: grid;
+            grid-template-areas: "stack";
+        }
+
+        /* --- 3. LAYER 1: THE BACKGROUND (Angel) --- */
+        .layer-heart {
+            grid-area: stack;
+            width: 100%;
+            height: 100%;
+            /* 'cover' ensures no white bars, 'contain' ensures full image visible.
+               Since we locked aspect-ratio above, 'cover' is usually safer/cleaner. */
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* --- 4. LAYER 2: THE UI OVERLAY --- */
+        .layer-ui {
+            grid-area: stack;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: grid;
+
+            /* Vertical Positioning Strategy:
+               1. Top Gap: 25% of the heart's height
+               2. Bow Area: Auto-sized
+               3. Bottom Gap: The rest */
+            /* grid-template-rows: 25% auto 1fr; */
+            grid-template-rows: 25% 55% 1fr;
+            grid-template-columns: 1fr auto 1fr;
+        }
+
+        /* --- 5. THE BOW (Now Fully Responsive) --- */
+        .bow-container {
+            grid-row: 2;
+            grid-column: 2;
+            align-self: start;
+            cursor: pointer;
+
+            /* CENTERING TRICK: 
+               Flexbox here centers the image inside this grid cell */
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* 1. The Floating "Button" Look */
+        .bow-img {
+            width: 35%;
+            height: auto;
+
+            /* TRANSITION: 
+       Makes the movement smooth, not instant. */
+            transition: all 0.15s ease-out;
+
+            /* DEPTH (The "Over" Effect): 
+       0px X-offset, 10px Y-offset (down), 15px Blur.
+       This creates a deep shadow, making the bow feel 'thick'. */
+            filter: drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.5));
+
+            /* LIFT:
+       We move the element up slightly to match the shadow depth. */
+            transform: translateY(-5px);
+        }
+
+        /* 2. The "Hover" State (Optional, mostly for Desktop) */
+        /* When mouse is over it, lift it slightly more to invite a click */
+        .bow-container:hover .bow-img {
+            transform: translateY(-7px) scale(1.02);
+            filter: drop-shadow(0px 12px 20px rgba(0, 0, 0, 0.4));
+        }
+
+        /* 3. The "Pressed" State (The Click) */
+        /* This happens effectively on 'touch' for mobile too */
+        .bow-container:active .bow-img {
+            /* PUSH DOWN:
+       Move it down below its original starting point. */
+            transform: translateY(2px) scale(0.95);
+
+            /* SHADOW CRUSH:
+       The shadow gets smaller and tighter because the object 
+       is touching the surface. */
+            filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.6));
+        }
+
+
+        .toggle-switch-container {
+            grid-row: 3;
+            grid-column: 2;
+
+            align-self: start;
+            cursor: pointer;
+
+            /* CENTERING TRICK: 
+               Flexbox here centers the image inside this grid cell */
+            display: flex;
+            justify-content: center;                        
+            justify-self: center;
+            width: 100%;
+        }
+                
+        .toggle-switch {
+            display: flex;
+            background: rgba(255, 255, 255, 0.5); /* Glassy background */
+            border-radius: 50px; /* Pill shape */
+            padding: 5px;
+            gap: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: fit-content; /* Shrink to fit icons */
+        }
+
+        /* --- 2. HIDE THE UGLY RADIOS --- */
+        .toggle-input {
+            display: none;
+        }
+
+        /* --- 3. THE BUTTONS (LABELS) --- */
+        .toggle-label {
+            width: 40px;  /* Fixed size for icons */
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            position: relative; /* Needed for tooltip positioning */
+        }
+
+        .toggle-label img {
+            width: 24px;
+            height: 24px;
+            opacity: 0.6; /* Dimmed by default */
+            transition: opacity 0.2s;
+        }
+
+        /* --- 4. HOVER EFFECT --- */
+        .toggle-label:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .toggle-label:hover img {
+            opacity: 1; /* Brighten icon on hover */
+        }
+
+        /* --- 5. SELECTED STATE (Highlight) --- */
+        /* This magic selector finds the label right after a checked radio */
+        .toggle-input:checked + .toggle-label {
+            background: #ff4081; /* Pink Highlight */
+            box-shadow: 0 2px 5px rgba(255, 64, 129, 0.4);
+        }
+
+        .toggle-input:checked + .toggle-label img {
+            opacity: 1;
+            filter: brightness(0) invert(1); /* Turns icon white! */
+        }
+
+        /* --- 6. CUSTOM TOOLTIP (The "Helpful Text") --- */
+        .toggle-label::after {
+            content: attr(data-tooltip); /* Grabs text from HTML */
+            
+            /* Hidden by default */
+            visibility: hidden;
+            opacity: 0;
+            
+            /* Positioning */
+            position: absolute;
+            bottom: 125%; /* Floats above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            
+            /* Style */
+            background: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        /* Show Tooltip on Hover */
+        .toggle-label:hover::after {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="heart-layout">
+
+        <img src="loveHeart.png" class="layer-heart" alt="Heart Background">
+
+        <div class="layer-ui">
+
+            <div class="bow-container" onclick="alert('You clicked the bow!')">
+                <img src="loveHeartBow.png" class="bow-img" alt="Bow">
+            </div>
+
+
+            <div class="toggle-switch-container">
+                <div class="toggle-switch">
+
+                    <input type="radio" id="mode-read" name="app-mode" class="toggle-input">
+                    <label for="mode-read" class="toggle-label" data-tooltip="Read Mode">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2702/2702134.png" alt="Read">
+                    </label>
+
+                    <input type="radio" id="mode-write" name="app-mode" class="toggle-input" checked>
+                    <label for="mode-write" class="toggle-label" data-tooltip="Write Mode">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2541/2541991.png" alt="Write">
+                    </label>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

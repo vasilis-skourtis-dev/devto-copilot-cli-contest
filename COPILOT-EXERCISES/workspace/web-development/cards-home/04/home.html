@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Heart</title>
+    <style>
+        /* --- 1. THE PAGE SETUP --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fce4ec; /* Light pink background */
+        }
+
+        /* --- 2. THE "SANDWICH" CONTAINER --- */
+        .heart-layout {
+            position: relative;
+            
+            /* RESPONSIVE SIZE: 
+               It takes 90% of screen width, but never gets bigger than 500px */
+            width: 90%; 
+            max-width: 500px;
+            
+            /* SAFETY LOCK: 
+               This ensures the box NEVER stretches. 
+               It forces a square shape (or whatever your image ratio is).
+               Change 1/1 to your image dimensions (e.g. 800/600) */
+            aspect-ratio: 1 / 1; 
+
+            /* GRID MAGIC: 
+               This stacks everything in the same cell (1 row, 1 column) */
+            display: grid;
+            grid-template-areas: "stack"; 
+        }
+
+        /* --- 3. LAYER 1: THE HEART (Background) --- */
+        .layer-heart {
+            grid-area: stack; /* Put in the stack pile */
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures the image is never squished */
+            z-index: 1;
+        }
+
+        /* --- 4. LAYER 2: THE UI GRID (The 30/70 Logic) --- */
+        .layer-ui {
+            grid-area: stack; /* Put on top of the heart */
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+
+            /* HERE IS YOUR 30/70 LOGIC */
+            display: grid;
+            
+            /* Rows: 
+               1. Top Space (30%) 
+               2. Bow Area (Auto-sized to fit bow)
+               3. Bottom Space (The rest) */
+            grid-template-rows: 30% auto 1fr; 
+            
+            /* Columns: centered */
+            grid-template-columns: 1fr auto 1fr;
+        }
+
+        /* --- 5. THE BOW COMPONENT --- */
+        .bow-container {
+            /* Place in Row 2 (after the 30% gap), Column 2 (Center) */
+            grid-row: 2;
+            grid-column: 2;
+            
+            /* Alignment within that slot */
+            align-self: start; /* Align to the top of the slot */
+            
+            /* Make it interactable */
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .bow-img {
+            /* Responsive Bow Size: 
+               Make it roughly 40% the width of the heart container */
+            width: 150px; 
+            max-width: 100%;
+            display: block;
+        }
+
+        .bow-container:active {
+            transform: scale(0.95); /* Little "press" effect */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="heart-layout">
+        
+        <img src="loveHeart.png" class="layer-heart" alt="Heart Background">
+
+        <div class="layer-ui">
+            
+            <div class="bow-container" onclick="alert('You clicked the bow!')">
+                <img src="loveHeartBow.png" class="bow-img" alt="Bow">
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

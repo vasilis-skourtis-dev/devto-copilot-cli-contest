@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* --- 1. THE CONTAINER --- */
+        .toggle-switch {
+            display: flex;
+            background: rgba(255, 255, 255, 0.5); /* Glassy background */
+            border-radius: 50px; /* Pill shape */
+            padding: 5px;
+            gap: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: fit-content; /* Shrink to fit icons */
+        }
+
+        /* --- 2. HIDE THE UGLY RADIOS --- */
+        .toggle-input {
+            display: none;
+        }
+
+        /* --- 3. THE BUTTONS (LABELS) --- */
+        .toggle-label {
+            width: 40px;  /* Fixed size for icons */
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            position: relative; /* Needed for tooltip positioning */
+        }
+
+        .toggle-label img {
+            width: 24px;
+            height: 24px;
+            opacity: 0.6; /* Dimmed by default */
+            transition: opacity 0.2s;
+        }
+
+        /* --- 4. HOVER EFFECT --- */
+        .toggle-label:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .toggle-label:hover img {
+            opacity: 1; /* Brighten icon on hover */
+        }
+
+        /* --- 5. SELECTED STATE (Highlight) --- */
+        /* This magic selector finds the label right after a checked radio */
+        .toggle-input:checked + .toggle-label {
+            background: #ff4081; /* Pink Highlight */
+            box-shadow: 0 2px 5px rgba(255, 64, 129, 0.4);
+        }
+
+        .toggle-input:checked + .toggle-label img {
+            opacity: 1;
+            filter: brightness(0) invert(1); /* Turns icon white! */
+        }
+
+        /* --- 6. CUSTOM TOOLTIP (The "Helpful Text") --- */
+        .toggle-label::after {
+            content: attr(data-tooltip); /* Grabs text from HTML */
+            
+            /* Hidden by default */
+            visibility: hidden;
+            opacity: 0;
+            
+            /* Positioning */
+            position: absolute;
+            bottom: 125%; /* Floats above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            
+            /* Style */
+            background: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        /* Show Tooltip on Hover */
+        .toggle-label:hover::after {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="toggle-switch">
+        
+        <input type="radio" id="mode-read" name="app-mode" class="toggle-input">
+        <label for="mode-read" class="toggle-label" data-tooltip="Read Mode">
+            <img src="https://cdn-icons-png.flaticon.com/512/2702/2702134.png" alt="Read">
+        </label>
+
+        <input type="radio" id="mode-write" name="app-mode" class="toggle-input" checked>
+        <label for="mode-write" class="toggle-label" data-tooltip="Write Mode">
+            <img src="https://cdn-icons-png.flaticon.com/512/2541/2541991.png" alt="Write">
+        </label>
+
+    </div>
+
+</body>
+</html>
